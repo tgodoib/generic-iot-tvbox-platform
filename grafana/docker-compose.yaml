@@ -1,0 +1,7 @@
+services:
+  grafana:
+    extends:
+      file: .config/docker-compose-base.yaml
+      service: grafana
+    environment:
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: tiagogb-ssaiot-app,tiagogb-ssaiot-panel,tiagogb-ssaiot-datasource

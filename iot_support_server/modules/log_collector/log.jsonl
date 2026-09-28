@@ -1,0 +1,4 @@
+{"DeviceID":"test_iot_device","Level":0,"Timestamp":1773613260,"Msg":"Meu log"}
+{"DeviceID":"test_iot_device","Level":0,"Timestamp":1773613436,"Msg":"Meu log 2"}
+{"DeviceID":"test_iot_device","Level":2,"Timestamp":1773613436,"Msg":"Meu log 2"}
+{"DeviceID":"iot_device_sim","Level":0,"Timestamp":1776311202,"Tags":null,"Msg":"Device initiated"}

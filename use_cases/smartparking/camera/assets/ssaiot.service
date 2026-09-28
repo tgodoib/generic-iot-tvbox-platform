@@ -1,0 +1,14 @@
+[Unit]
+Description=SSAIOT app
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/tiagogb
+ExecStart=/home/pi/tiagogb/.venv/bin/python /home/pi/tiagogb/main.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

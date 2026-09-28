@@ -1,0 +1,36 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "app",
+  "name": "SSAIoT",
+  "id": "tiagogb-ssaiot-app",
+  "backend": true,
+  "executable": "gpx_ssa_io_t",
+  "info": {
+    "keywords": ["app"],
+    "description": "",
+    "author": {
+      "name": "Tiagogb"
+    },
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "includes": [
+    {
+      "type": "panel",
+      "name": "SSAIoT Panel"
+    },
+    {
+      "type": "datasource",
+      "name": "SSAIoT Datasource"
+    }
+  ],
+  "dependencies": {
+    "grafanaDependency": ">=12.3.0",
+    "plugins": []
+  }
+}

@@ -1,0 +1,36 @@
+build-health:
+    cd {{justfile_dir()}}/modules/health_checker; GOOS=linux GOARCH=arm GOARM=7 go build -o {{justfile_dir()}}/releases/bin/health_checker .
+
+build-log:
+    cd {{justfile_dir()}}/modules/log_collector; GOOS=linux GOARCH=arm GOARM=7 go build -o {{justfile_dir()}}/releases/bin/log_collector .
+
+build-notification:
+    cd {{justfile_dir()}}/modules/notification_system; GOOS=linux GOARCH=arm GOARM=7 go build -o {{justfile_dir()}}/releases/bin/notification_system .
+
+build-ota:
+     cd {{justfile_dir()}}/modules/ota_server; GOOS=linux GOARCH=arm GOARM=7 go build -o {{justfile_dir()}}/releases/bin/ota_server .
+
+build-sensor:
+    cd {{justfile_dir()}}/modules/sensor_data_collector; GOOS=linux GOARCH=arm GOARM=7 go build -o {{justfile_dir()}}/releases/bin/sensor_data_collector .
+
+build-all:
+    just build-health
+    just build-log
+    just build-notification
+    just build-ota
+    just build-sensor
+
+upload version="latest":
+    rsync -avz \
+        --rsync-path="mkdir -p /root/ssaiot/{{version}} && rsync" \
+        ./releases/ root@10.0.0.102:/root/ssaiot/{{version}}
+
+setup version="latest":
+    ssh root@10.0.0.102 "cd /root/ssaiot/{{version}} && bash setup.sh"
+
+
+create-ca name:
+    ssh root@10.0.0.50 "/root/certs/scripts/create_ca.sh {{name}} && cat /root/certs/cas/{{name}}.crt >> /root/certs/cas/ca.crt"
+
+create-client name ca="main":
+    ssh root@10.0.0.50 "/root/certs/scripts/create_client.sh {{ca}} {{name}} && cat /root/certs/clients/{{name}}.crt && cat /root/certs/clients/{{name}}.key"

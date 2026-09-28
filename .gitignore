@@ -1,0 +1,72 @@
+# ─── Secrets ─────────────────────────────────────────────────────────────────
+# Private keys and device credentials never go to git
+*.key
+*.pem
+.env
+.env.*
+*.env
+!.env.example
+!*.env.example
+certs/
+**/src/Secrets.h
+device_secrets.py
+sdks/go/secrets.go
+
+# ─── OS / Editors ────────────────────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# ─── AI assistants ───────────────────────────────────────────────────────────
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+.codex/
+AGENTS.md
+AGENTS/
+GEMINI.md
+.gemini/
+.cursor/
+.cursorrules
+.github/copilot-instructions.md
+
+# ─── Camera assets (models, masks, demo images) — only the systemd unit is kept
+*.tflite
+use_cases/*/camera/assets/*
+!use_cases/*/camera/assets/ssaiot.service
+
+# ─── Python (sdks/python, use_cases/*/camera) ────────────────────────────────
+__pycache__/
+*.py[oc]
+.venv/
+*.egg-info/
+build/
+dist/
+wheels/
+.pytest_cache/
+
+# ─── Go (iot_support_server, sdks/go, grafana backend) ───────────────────────
+iot_support_server/releases/bin/
+
+# ─── PlatformIO (sdks/esp, use_cases/*/totem) ────────────────────────────────
+.pio/
+*.bin
+
+# ─── Node / Grafana plugin ───────────────────────────────────────────────────
+node_modules/
+coverage/
+.eslintcache
+grafana/artifacts/
+grafana/work/
+grafana/ci/
+grafana/test-results/
+grafana/playwright-report/
+grafana/blob-report/
+grafana/playwright/.cache/
+grafana/playwright/.auth/
+
+# ─── Release bundles / local junk ────────────────────────────────────────────
+iot_support_server/data.txt
+*.zip
+*.log

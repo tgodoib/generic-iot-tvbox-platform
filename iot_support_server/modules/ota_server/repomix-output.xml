@@ -1,0 +1,172 @@
+<directory_structure>
+adapters/
+  http.go
+  minio.go
+  mqtt.go
+config/
+  config.go
+model/
+  firmware.go
+ota/
+  service.go
+go.mod
+main.go
+</directory_structure>
+
+<files>
+<file path="adapters/http.go">
+package adapters
+⋮----
+import "ota_server/ota"
+⋮----
+type HTTP struct {
+	ota ota.Service
+}
+⋮----
+func NewHTTPAdapter(ota ota.Service) *HTTP
+⋮----
+/*
+		POST   /firmware          # upload do binário, retorna 201 + { id, created_at }
+		GET    /firmware/:id      # metadados do firmware (versão, tamanho, created_at)
+		DELETE /firmware/:id      # remove firmware do Minio
+
+		POST   /update            # envia manifest via MQTT, retorna 202 Accepted
+	*/
+⋮----
+func (h *HTTP) Listen(addr string)
+⋮----
+func (h *HTTP) UploadFirmware()
+⋮----
+func (h *HTTP) GetFirmware()
+⋮----
+func (h *HTTP) DeleteFirmware()
+⋮----
+func (h *HTTP) SendUpdate()
+</file>
+
+<file path="adapters/minio.go">
+package adapters
+⋮----
+import "ota_server/config"
+⋮----
+type Minio struct{}
+⋮----
+func NewMinioAdapter(config config.MinioConfig) *Minio
+⋮----
+func (m *Minio) StoreFirmware()
+⋮----
+func (m *Minio) GenerateLink()
+</file>
+
+<file path="adapters/mqtt.go">
+package adapters
+⋮----
+import (
+	"fmt"
+	"ota_server/config"
+
+	pahoMQTT "github.com/eclipse/paho.mqtt.golang"
+)
+⋮----
+"fmt"
+"ota_server/config"
+⋮----
+pahoMQTT "github.com/eclipse/paho.mqtt.golang"
+⋮----
+type MQTT struct {
+	client pahoMQTT.Client
+}
+⋮----
+func NewMQTTAdapter(config config.MQTTConfig) *MQTT
+⋮----
+func (h *MQTT) SendManifestToClass() error
+⋮----
+//token := m.client.Publish(topic, 0, false, m)
+//token.Wait()
+⋮----
+func (h *MQTT) SendManifestToID() error
+</file>
+
+<file path="config/config.go">
+package config
+⋮----
+type MQTTConfig struct{}
+type MinioConfig struct{}
+type Config struct {
+	MQTT     MQTTConfig
+	Minio    MinioConfig
+	HTTPAddr string
+}
+⋮----
+func Load() Config
+</file>
+
+<file path="model/firmware.go">
+package model
+⋮----
+type Firmware struct{}
+⋮----
+type Manifest struct{}
+⋮----
+type Recipient struct{}
+</file>
+
+<file path="ota/service.go">
+package ota
+⋮----
+import (
+	"ota_server/adapters"
+	"ota_server/model"
+)
+⋮----
+"ota_server/adapters"
+"ota_server/model"
+⋮----
+type Service struct {
+	storage *adapters.Minio
+	broker  *adapters.MQTT
+}
+⋮----
+func NewService(storage *adapters.Minio, broker *adapters.MQTT) *Service
+⋮----
+func (s *Service) CreateFirmware() (model.Firmware, error)
+⋮----
+func (s *Service) DeleteFirmware(id string) error
+⋮----
+func (s *Service) GetFirmware(id string) (model.Firmware, error)
+⋮----
+func (s *Service) CreateManifest() (model.Manifest, error)
+⋮----
+func (s *Service) SendUpdate(id string, recipient model.Recipient) error
+</file>
+
+<file path="go.mod">
+module ota_server
+
+go 1.25.0
+
+require (
+	github.com/eclipse/paho.mqtt.golang v1.5.1 // indirect
+	github.com/gorilla/websocket v1.5.3 // indirect
+	golang.org/x/net v0.44.0 // indirect
+	golang.org/x/sync v0.17.0 // indirect
+)
+</file>
+
+<file path="main.go">
+package ota_server
+⋮----
+import (
+	"ota_server/adapters"
+	"ota_server/config"
+	"ota_server/ota"
+)
+⋮----
+"ota_server/adapters"
+"ota_server/config"
+"ota_server/ota"
+⋮----
+func main()
+</file>
+
+</files>

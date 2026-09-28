@@ -1,0 +1,17 @@
+[Unit]
+Description=OTA Server
+After=network-online.target mosquitto.service
+Wants=network-online.target
+Requires=mosquitto.service
+
+[Service]
+ExecStart=/opt/ssaiot/bin/ota_server
+WorkingDirectory=/opt/ssaiot/bin/
+EnvironmentFile=/etc/ssaiot/ssaiot.env
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=0
+User=root
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+[Unit]
+Description=Notification System
+After=network-online.target mosquitto.service
+Wants=network-online.target
+Requires=mosquitto.service
+
+[Service]
+ExecStart=/opt/ssaiot/bin/notification_system
+WorkingDirectory=/opt/ssaiot/bin/
+EnvironmentFile=/etc/ssaiot/ssaiot.env
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=0
+User=root
+
+[Install]
+WantedBy=multi-user.target

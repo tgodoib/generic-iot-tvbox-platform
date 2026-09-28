@@ -1,0 +1,11 @@
+{
+  "name": "SSAIoT",
+  "version": "0.1.0",
+  "description": "ESP32/ESP8266 client SDK for the SSAIoT platform (MQTT/mTLS, OTA, logs, sensors, heartbeat)",
+  "frameworks": "arduino",
+  "platforms": ["espressif32", "espressif8266"],
+  "dependencies": {
+    "knolleary/PubSubClient": "^2.8",
+    "soburi/TinyCBOR": "^0.5.3-arduino2"
+  }
+}

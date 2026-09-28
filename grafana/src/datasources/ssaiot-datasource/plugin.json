@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "datasource",
+  "name": "SSAIoT Datasource",
+  "id": "tiagogb-ssaiot-datasource",
+  "backend": true,
+  "executable": "gpx_ssa_io_t",
+  "info": {
+    "description": "SSAIoT firmware management datasource with mTLS support",
+    "author": {
+      "name": "Tiagogb"
+    },
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=12.3.0",
+    "plugins": []
+  }
+}
